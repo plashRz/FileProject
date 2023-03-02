@@ -16,6 +16,8 @@ public class FileApp {
 
         FileApp fa = new FileApp();
         fa.loadFiles();
+        System.out.println("\n\t\t\t=======Files loaded!!========");
+
         fa.chooseOperation();
 
     }
@@ -30,10 +32,10 @@ public class FileApp {
             System.out.println((i + 1) + ": " + options1[i]);
         }
 
-        switch (new Scanner(System.in).nextInt()) {
-            case 1 -> displayFiles();
-            case 2 -> subOperation();
-            case 3 -> exitOnclose();
+        switch (new Scanner(System.in).nextLine()) {
+            case "1" -> displayFiles();
+            case "2" -> subOperation();
+            case "3" -> exitOnclose();
             default -> {
                 System.out.println("Incorrect option!...please choose wisely");
                 chooseOperation();
@@ -43,6 +45,7 @@ public class FileApp {
     }
 
     private void displayFiles() {
+        loadFiles();
         System.out.println();
         fileList.sort(Comparator.naturalOrder());
         fileList.iterator().forEachRemaining(e -> System.out.println(e.getName()));
@@ -62,12 +65,12 @@ public class FileApp {
             System.out.println((i + 1) + ": " + options2[i]);
         }
 
-        switch (new Scanner(System.in).nextInt()) {
-            case 1 -> createFile();
-            case 2 -> deleteFile();
-            case 3 -> searchFile();
-            case 4 -> previousMenu();
-            case 5 -> exitOnclose();
+        switch (new Scanner(System.in).nextLine()) {
+            case "1" -> createFile();
+            case "2" -> deleteFile();
+            case "3" -> searchFile();
+            case "4" -> previousMenu();
+            case "5" -> exitOnclose();
             default -> {
                 System.out.println("Incorrect option!...please choose wisely");
                 subOperation();
@@ -85,6 +88,7 @@ public class FileApp {
         String name = caseCorrect(new Scanner(System.in).nextLine());
         String s;
         boolean flag = false;
+
         int index = 0;
 
         for (int i = 0; i < fileList.size(); i++) {
@@ -205,12 +209,14 @@ public class FileApp {
     }
 
     private void loadFiles() {
+
+        fileList.clear();
         //loaded directory
-        final File locker = new File("src/FilesLockerRoom");
+        File locker = new File("src/FilesLockerRoom");
+
         //listed all items in locker as a file[] and added them in arraylist of files
         Arrays.stream(Objects.requireNonNull(locker.listFiles())).iterator().forEachRemaining(fileList::add);
 
-        System.out.println("\n\t\t\t=======Files loaded!!========");
     }
 
 }
